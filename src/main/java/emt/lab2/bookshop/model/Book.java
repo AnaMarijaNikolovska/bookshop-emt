@@ -16,8 +16,8 @@ public class Book {
     @ManyToOne(fetch = FetchType.EAGER)
     Category Category;
     String Picture;
-    @ManyToMany
-    List<ShoppingCart> ShoppingCarts;
+    @ManyToOne
+    CartItem cartItem;
 
 
 

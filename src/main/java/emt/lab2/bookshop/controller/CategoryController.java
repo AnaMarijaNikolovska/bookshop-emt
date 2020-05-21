@@ -5,6 +5,7 @@ import emt.lab2.bookshop.service.implementation.CategoryServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -27,8 +28,14 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public Category returnOne(@PathVariable Long id){
+    public Optional<Category> returnOne(@PathVariable Long id){
         return categoryService.getOneCategory(id);
+    }
+
+
+     @DeleteMapping("/{id}")
+   public void deleted (@PathVariable Long id){
+       categoryService.delete(id);
     }
 
 }

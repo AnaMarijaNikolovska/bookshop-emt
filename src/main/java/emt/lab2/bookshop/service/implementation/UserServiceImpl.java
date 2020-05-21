@@ -1,6 +1,6 @@
 package emt.lab2.bookshop.service.implementation;
 
-import emt.lab2.bookshop.model.User;
+import emt.lab2.bookshop.model.StoreUser;
 import emt.lab2.bookshop.repository.UserRepository;
 import emt.lab2.bookshop.service.UserService;
 import org.springframework.stereotype.Service;
@@ -16,31 +16,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUser() {
+    public List<StoreUser> getAllUser() {
         return userRepository.findAll();
     }
 
     @Override
-    public User getOneUser(String username) {
+    public StoreUser getOneUser(String username) {
         return userRepository.getOne(username);
     }
 
     @Override
-    public User saveUser(User user) {
-        return userRepository.save(user);
+    public StoreUser saveUser(StoreUser storeUser) {
+        return userRepository.save(storeUser);
     }
 
     @Override
-    public User editedUser(User user) {
-        User korisnik= new User();
-        korisnik.setUsername(user.getUsername());
-        korisnik.setPassword(user.getPassword());
-        return user;
+    public StoreUser editedUser(StoreUser storeUser) {
+        StoreUser korisnik= new StoreUser();
+        korisnik.setUsername(storeUser.getUsername());
+        korisnik.setPassword(storeUser.getPassword());
+        return storeUser;
     }
 
     @Override
-    public void deleted(User user) {
-        userRepository.delete(user);
+    public void deleted(StoreUser storeUser) {
+        userRepository.delete(storeUser);
 
     }
 }

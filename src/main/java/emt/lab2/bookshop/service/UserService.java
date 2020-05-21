@@ -1,15 +1,15 @@
 package emt.lab2.bookshop.service;
 
-import emt.lab2.bookshop.model.User;
+import emt.lab2.bookshop.model.StoreUser;
 
 import java.util.List;
 
 public interface UserService {
-    public List<User> getAllUser();
-    public User getOneUser(String username);
-    public User saveUser(User user);
-    public User editedUser(User user);
-    public void deleted(User user);
+    public List<StoreUser> getAllUser();
+    public StoreUser getOneUser(String username);
+    public StoreUser saveUser(StoreUser storeUser);
+    public StoreUser editedUser(StoreUser storeUser);
+    public void deleted(StoreUser storeUser);
 
 
 }

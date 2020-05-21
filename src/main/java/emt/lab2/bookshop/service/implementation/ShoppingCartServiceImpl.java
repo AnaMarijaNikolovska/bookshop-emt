@@ -37,7 +37,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart cart = new ShoppingCart();
         cart.setId(shoppingCart.getId());
         cart.setCloseDate(shoppingCart.getCloseDate());
-        cart.setBooks(shoppingCart.getBooks());
+        cart.setCartItem(shoppingCart.getCartItem());
         cart.setCreateDate(shoppingCart.getCreateDate());
         cart.setUsername(shoppingCart.getUsername());
         return cart;

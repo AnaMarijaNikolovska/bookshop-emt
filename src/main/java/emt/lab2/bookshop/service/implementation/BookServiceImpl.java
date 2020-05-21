@@ -38,7 +38,7 @@ public class BookServiceImpl implements BookService {
         bookToBeReturned.setName(editedBook.getName());
         bookToBeReturned.setNumberOfBooks(editedBook.getNumberOfBooks());
         bookToBeReturned.setPicture(editedBook.getPicture());
-        bookToBeReturned.setShoppingCarts(editedBook.getShoppingCarts());
+        bookToBeReturned.setCartItem(editedBook.getCartItem());
         return bookToBeReturned;
     }
 

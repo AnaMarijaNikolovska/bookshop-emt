@@ -18,8 +18,8 @@ public class ShoppingCart {
     LocalDateTime CreateDate;
     LocalDateTime CloseDate;
     @ManyToOne
-    User Username;
-    @ManyToMany
-    List<Book> Books;
+    StoreUser username;
+    @ManyToOne
+    CartItem CartItem;
 
 }
