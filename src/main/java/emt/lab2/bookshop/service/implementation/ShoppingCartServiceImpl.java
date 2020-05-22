@@ -6,6 +6,7 @@ import emt.lab2.bookshop.service.ShoppingCartService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
@@ -22,9 +23,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCart getOneShoppingCart(Long id) {
+    public Optional<ShoppingCart> getOneShoppingCart(Long id) {
 
-        return shoppingCartRepository.getOne(id);
+        return shoppingCartRepository.findById(id);
     }
 
     @Override

@@ -28,14 +28,21 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Category> returnOne(@PathVariable Long id){
+    public Optional<Category> returnOne(@PathVariable Long id) {
         return categoryService.getOneCategory(id);
     }
 
 
-     @DeleteMapping("/{id}")
-   public void deleted (@PathVariable Long id){
-       categoryService.delete(id);
+    @DeleteMapping("/{id}")
+    public void deleted(@PathVariable Long id) {
+        categoryService.delete(id);
     }
+
+    @PutMapping("/{id}")
+    public Category edited(@PathVariable Long id, @RequestBody Category category) {
+        return categoryService.editCategory(category, id);
+
+    }
+
 
 }

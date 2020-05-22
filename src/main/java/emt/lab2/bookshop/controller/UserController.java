@@ -6,6 +6,7 @@ import org.apache.tomcat.jni.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user")
@@ -28,9 +29,10 @@ public class UserController {
         return userService.saveUser(storeUser);
     }
     @GetMapping("/{username}")
-    public StoreUser user(@PathVariable String username){
+    public Optional<StoreUser> user(@PathVariable String username){
         return userService.getOneUser(username);
     }
+
 
 
 }

@@ -6,6 +6,7 @@ import emt.lab2.bookshop.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -21,8 +22,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public StoreUser getOneUser(String username) {
-        return userRepository.getOne(username);
+    public Optional<StoreUser> getOneUser(String username) {
+        return userRepository.findById(username);
     }
 
     @Override
