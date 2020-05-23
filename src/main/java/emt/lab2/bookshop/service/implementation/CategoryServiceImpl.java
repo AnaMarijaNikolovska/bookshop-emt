@@ -34,12 +34,19 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category editCategory(Category category) {
-        Category kategorija= new Category();
-        kategorija.setId(category.getId());
-        kategorija.setName(category.getName());
-        kategorija.setDescription(category.getDescription());
-        return kategorija;
+    public Category editCategory(Category category, Long id) {
+
+        Optional<Category> category1=getOneCategory(id);
+        if (category1.isPresent()){
+            Category kategorija= category1.get();
+            kategorija.setId(category.getId());
+            kategorija.setName(category.getName());
+            kategorija.setDescription(category.getDescription());
+            return saveCategory(kategorija);
+        }
+        return null;
+
+
     }
 
     @Override

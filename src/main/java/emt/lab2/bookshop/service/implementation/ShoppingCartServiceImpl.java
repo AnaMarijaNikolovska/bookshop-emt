@@ -6,6 +6,7 @@ import emt.lab2.bookshop.service.ShoppingCartService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
@@ -22,9 +23,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCart getOneShoppingCart(Long id) {
+    public Optional<ShoppingCart> getOneShoppingCart(Long id) {
 
-        return shoppingCartRepository.getOne(id);
+        return shoppingCartRepository.findById(id);
     }
 
     @Override
@@ -33,14 +34,20 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCart editedShoppingCart(ShoppingCart shoppingCart) {
-        ShoppingCart cart = new ShoppingCart();
-        cart.setId(shoppingCart.getId());
-        cart.setCloseDate(shoppingCart.getCloseDate());
-        cart.setCartItem(shoppingCart.getCartItem());
-        cart.setCreateDate(shoppingCart.getCreateDate());
-        cart.setUsername(shoppingCart.getUsername());
-        return cart;
+    public ShoppingCart editedShoppingCart(ShoppingCart shoppingCart, Long id) {
+        Optional<ShoppingCart> optionalShoppingCart = getOneShoppingCart(id);
+        if (optionalShoppingCart.isPresent()) {
+            ShoppingCart cart = optionalShoppingCart.get();
+
+            cart.setId(shoppingCart.getId());
+            cart.setCloseDate(shoppingCart.getCloseDate());
+            cart.setCartItem(shoppingCart.getCartItem());
+            cart.setCreateDate(shoppingCart.getCreateDate());
+            cart.setUsername(shoppingCart.getUsername());
+            return saveShoppingCart(cart);
+        }
+        return null;
+
 
     }
 

@@ -6,6 +6,7 @@ import emt.lab2.bookshop.service.BookService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -21,8 +22,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book getOneBook(Long id) {
-        return bookRepository.getOne(id);
+    public Optional<Book> getOneBook(Long id) {
+        return bookRepository.findById(id);
     }
 
     @Override
@@ -31,15 +32,19 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book editBook(Book editedBook) {
-        Book bookToBeReturned=new Book();
-        bookToBeReturned.setCategory(editedBook.getCategory());
-        bookToBeReturned.setId(editedBook.getId());
-        bookToBeReturned.setName(editedBook.getName());
-        bookToBeReturned.setNumberOfBooks(editedBook.getNumberOfBooks());
-        bookToBeReturned.setPicture(editedBook.getPicture());
-        bookToBeReturned.setCartItem(editedBook.getCartItem());
-        return bookToBeReturned;
+    public Book editBook(Book editedBook, Long id) {
+        Optional<Book> updatedBook = getOneBook(id);
+        if (updatedBook.isPresent()) {
+            Book bookToBeReturned = updatedBook.get();
+            bookToBeReturned.setCategory(editedBook.getCategory());
+            bookToBeReturned.setId(editedBook.getId());
+            bookToBeReturned.setName(editedBook.getName());
+            bookToBeReturned.setNumberOfBooks(editedBook.getNumberOfBooks());
+            bookToBeReturned.setPicture(editedBook.getPicture());
+            bookToBeReturned.setCartItem(editedBook.getCartItem());
+            return createBook(bookToBeReturned);
+        }
+        return null;
     }
 
     @Override

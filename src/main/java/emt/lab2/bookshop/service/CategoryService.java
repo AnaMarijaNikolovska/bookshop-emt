@@ -10,7 +10,7 @@ public interface CategoryService {
     public List<Category> getAllCategory();
     public Optional<Category> getOneCategory(Long id);
     public Category saveCategory(Category category);
-    public Category editCategory(Category category);
+    public Category editCategory(Category category, Long id);
     public void delete(Long id);
 
 }
