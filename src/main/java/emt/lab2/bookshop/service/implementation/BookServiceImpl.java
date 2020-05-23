@@ -32,15 +32,19 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book editBook(Book editedBook) {
-        Book bookToBeReturned = new Book();
-        bookToBeReturned.setCategory(editedBook.getCategory());
-        bookToBeReturned.setId(editedBook.getId());
-        bookToBeReturned.setName(editedBook.getName());
-        bookToBeReturned.setNumberOfBooks(editedBook.getNumberOfBooks());
-        bookToBeReturned.setPicture(editedBook.getPicture());
-        bookToBeReturned.setCartItem(editedBook.getCartItem());
-        return bookToBeReturned;
+    public Book editBook(Book editedBook, Long id) {
+        Optional<Book> updatedBook = getOneBook(id);
+        if (updatedBook.isPresent()) {
+            Book bookToBeReturned = updatedBook.get();
+            bookToBeReturned.setCategory(editedBook.getCategory());
+            bookToBeReturned.setId(editedBook.getId());
+            bookToBeReturned.setName(editedBook.getName());
+            bookToBeReturned.setNumberOfBooks(editedBook.getNumberOfBooks());
+            bookToBeReturned.setPicture(editedBook.getPicture());
+            bookToBeReturned.setCartItem(editedBook.getCartItem());
+            return createBook(bookToBeReturned);
+        }
+        return null;
     }
 
     @Override

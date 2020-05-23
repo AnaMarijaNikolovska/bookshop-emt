@@ -10,7 +10,7 @@ public interface BookService  {
     public List<Book> getAllBooks();
     public Optional<Book> getOneBook(Long id);
     public Book createBook(Book book);
-    public Book editBook(Book book);
+    public Book editBook(Book book, Long id);
     public void delete(Long id);
 
 

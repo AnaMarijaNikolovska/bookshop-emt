@@ -16,23 +16,32 @@ public class UserController {
     public UserController(UserServiceImpl userService) {
         this.userService = userService;
     }
+
     @GetMapping
-    public List<StoreUser> allUsers(){
+    public List<StoreUser> allUsers() {
         return userService.getAllUser();
     }
+
     @DeleteMapping
-    public void delete(@RequestBody StoreUser storeUser){
+    public void delete(@RequestBody StoreUser storeUser) {
         userService.deleted(storeUser);
     }
+
     @PostMapping
-    public StoreUser create(@RequestBody StoreUser storeUser){
+    public StoreUser create(@RequestBody StoreUser storeUser) {
         return userService.saveUser(storeUser);
     }
+
     @GetMapping("/{username}")
-    public Optional<StoreUser> user(@PathVariable String username){
+    public Optional<StoreUser> user(@PathVariable String username) {
         return userService.getOneUser(username);
     }
 
+    @PutMapping("/{username}")
+    public StoreUser editedUser(@PathVariable String username, @RequestBody StoreUser storeUser) {
+        return userService.editedUser(storeUser,username);
+
+    }
 
 
 }

@@ -30,5 +30,14 @@ public class ShoppingCartController {
     public ShoppingCart newCart(ShoppingCart shoppingCart) {
         return shoppingCartService.saveShoppingCart(shoppingCart);
     }
+    @PutMapping("/{id}")
+    public ShoppingCart editedCart(@RequestBody ShoppingCart shoppingCart, @PathVariable Long id){
+        return shoppingCartService.editedShoppingCart(shoppingCart, id);
+    }
+    @DeleteMapping("/{id}")
+    public void deletedCart(@PathVariable Long id){
+        shoppingCartService.delete(id);
+
+    }
 }
 

@@ -34,14 +34,20 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCart editedShoppingCart(ShoppingCart shoppingCart) {
-        ShoppingCart cart = new ShoppingCart();
-        cart.setId(shoppingCart.getId());
-        cart.setCloseDate(shoppingCart.getCloseDate());
-        cart.setCartItem(shoppingCart.getCartItem());
-        cart.setCreateDate(shoppingCart.getCreateDate());
-        cart.setUsername(shoppingCart.getUsername());
-        return cart;
+    public ShoppingCart editedShoppingCart(ShoppingCart shoppingCart, Long id) {
+        Optional<ShoppingCart> optionalShoppingCart = getOneShoppingCart(id);
+        if (optionalShoppingCart.isPresent()) {
+            ShoppingCart cart = optionalShoppingCart.get();
+
+            cart.setId(shoppingCart.getId());
+            cart.setCloseDate(shoppingCart.getCloseDate());
+            cart.setCartItem(shoppingCart.getCartItem());
+            cart.setCreateDate(shoppingCart.getCreateDate());
+            cart.setUsername(shoppingCart.getUsername());
+            return saveShoppingCart(cart);
+        }
+        return null;
+
 
     }
 
