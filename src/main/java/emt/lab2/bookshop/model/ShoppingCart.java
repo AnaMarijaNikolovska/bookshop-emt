@@ -24,8 +24,10 @@ public class ShoppingCart {
     @ManyToOne
     StoreUser username;
 
-    public ShoppingCart(LocalDateTime createDate, StatusEnum statusEnum) {
-        createDate = createDate;
-        statusEnum = statusEnum;
+    public ShoppingCart(LocalDateTime createDate, StatusEnum statusEnum, StoreUser storeUser) {
+        this.createDate = createDate;
+        this.statusEnum = statusEnum;
+        this.username = storeUser;
     }
+
 }

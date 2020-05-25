@@ -13,6 +13,7 @@ public interface CartItemService  {
     CartItem editCartItem(CartItem cartItem);
     void deleteCartItem(Long id);
     List<CartItem> getAllCartItemsFromCart(Long id);
+    void deleteBooksInShoppingCart(Long id);
 
 
 }

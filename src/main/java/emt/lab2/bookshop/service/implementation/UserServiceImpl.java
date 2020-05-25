@@ -51,4 +51,12 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(storeUser);
 
     }
+
+    @Override
+    public StoreUser getAuthUser() {
+        StoreUser storeUser = new StoreUser();
+        storeUser.setUsername("AnaMarija");
+        storeUser.setPassword("Anchy");
+        return storeUser;
+    }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/shoppingCart")
+@RequestMapping("/api/shopping-carts")
 public class ShoppingCartController {
     public final ShoppingCartServiceImpl shoppingCartService;
     public final CartItemService cartItemService;
@@ -44,5 +44,9 @@ public class ShoppingCartController {
 //    public ShoppingCart editedCart(@RequestBody ShoppingCart shoppingCart, @PathVariable Long id){
 //        return shoppingCartService.editedShoppingCart(shoppingCart, id);
 //    }
+    @PostMapping("/{id}/close")
+    public ShoppingCart closeCart(@PathVariable Long id){
+        return shoppingCartService.closeShoppingCart(id);
+    }
 }
 
