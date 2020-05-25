@@ -1,8 +1,10 @@
 package emt.lab2.bookshop.service.implementation;
 
 import emt.lab2.bookshop.model.Book;
+import emt.lab2.bookshop.model.Category;
 import emt.lab2.bookshop.repository.BookRepository;
 import emt.lab2.bookshop.service.BookService;
+import emt.lab2.bookshop.service.CategoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +13,11 @@ import java.util.Optional;
 @Service
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
+    private final CategoryService categoryService;
 
-    public BookServiceImpl(BookRepository bookRepository) {
+    public BookServiceImpl(BookRepository bookRepository, CategoryService categoryService) {
         this.bookRepository = bookRepository;
+        this.categoryService = categoryService;
     }
 
     @Override
@@ -28,7 +32,20 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book createBook(Book book) {
-        return bookRepository.save(book);
+
+        Optional<Category> optionalCategory = categoryService.getOneCategory(book.getCategory().getId());
+        Category category = new Category();
+        if (optionalCategory.isPresent()) {
+            category = optionalCategory.get();
+        }
+
+        Book newBook = new Book();
+        newBook.setCategory(category);
+        newBook.setName(book.getName());
+        newBook.setNumberOfBooks(book.getNumberOfBooks());
+        newBook.setPicture(book.getPicture());
+
+        return bookRepository.save(newBook);
     }
 
     @Override
@@ -41,7 +58,6 @@ public class BookServiceImpl implements BookService {
             bookToBeReturned.setName(editedBook.getName());
             bookToBeReturned.setNumberOfBooks(editedBook.getNumberOfBooks());
             bookToBeReturned.setPicture(editedBook.getPicture());
-            bookToBeReturned.setCartItem(editedBook.getCartItem());
             return createBook(bookToBeReturned);
         }
         return null;

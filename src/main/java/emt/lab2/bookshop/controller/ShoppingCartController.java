@@ -1,7 +1,8 @@
 package emt.lab2.bookshop.controller;
 
-import emt.lab2.bookshop.model.Book;
+import emt.lab2.bookshop.model.CartItem;
 import emt.lab2.bookshop.model.ShoppingCart;
+import emt.lab2.bookshop.service.CartItemService;
 import emt.lab2.bookshop.service.implementation.ShoppingCartServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,32 +13,36 @@ import java.util.Optional;
 @RequestMapping("/api/shoppingCart")
 public class ShoppingCartController {
     public final ShoppingCartServiceImpl shoppingCartService;
+    public final CartItemService cartItemService;
 
-    public ShoppingCartController(ShoppingCartServiceImpl shoppingCartService) {
+    public ShoppingCartController(ShoppingCartServiceImpl shoppingCartService, CartItemService cartItemService) {
         this.shoppingCartService = shoppingCartService;
+        this.cartItemService = cartItemService;
     }
+
     @GetMapping
     public List<ShoppingCart> shoppingCarts() {
         return shoppingCartService.getAllShoppingCart();
     }
 
     @GetMapping("/{id}")
-    public Optional<ShoppingCart> oneShoppingCart(@PathVariable Long id) {
-        return shoppingCartService.getOneShoppingCart(id);
+    public List<CartItem> oneShoppingCart(@PathVariable Long id) {
+        return cartItemService.getAllCartItemsFromCart(id);
     }
 
     @PostMapping
-    public ShoppingCart newCart(ShoppingCart shoppingCart) {
-        return shoppingCartService.saveShoppingCart(shoppingCart);
+    public ShoppingCart newCart(@RequestBody List<CartItem> cartItems) {
+        return shoppingCartService.saveShoppingCart(cartItems);
     }
-    @PutMapping("/{id}")
-    public ShoppingCart editedCart(@RequestBody ShoppingCart shoppingCart, @PathVariable Long id){
-        return shoppingCartService.editedShoppingCart(shoppingCart, id);
-    }
-    @DeleteMapping("/{id}")
-    public void deletedCart(@PathVariable Long id){
-        shoppingCartService.delete(id);
 
+    @DeleteMapping("/{id}")
+    public void deletedCart(@PathVariable Long id) {
+        shoppingCartService.delete(id);
     }
+
+//    @PutMapping("/{id}")
+//    public ShoppingCart editedCart(@RequestBody ShoppingCart shoppingCart, @PathVariable Long id){
+//        return shoppingCartService.editedShoppingCart(shoppingCart, id);
+//    }
 }
 

@@ -15,7 +15,6 @@ public class BookController {
 
     public BookController(BookServiceImpl bookService) {
         this.bookService = bookService;
-
     }
 
     @GetMapping
@@ -34,15 +33,12 @@ public class BookController {
     }
 
     @PostMapping
-    public Book addBook(Book book) {
+    public Book addBook(@RequestBody Book book) {
         return bookService.createBook(book);
     }
+
     @PutMapping("/{id}")
-    public Book editedBook(@PathVariable Long id,@RequestBody Book book){
-        return bookService.editBook(book,id);
-
+    public Book editedBook(@PathVariable Long id, @RequestBody Book book) {
+        return bookService.editBook(book, id);
     }
-
-
-
 }

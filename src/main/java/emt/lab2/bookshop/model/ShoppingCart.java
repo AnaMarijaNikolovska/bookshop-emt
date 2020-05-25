@@ -1,25 +1,31 @@
 package emt.lab2.bookshop.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long Id;
-    enum Status{
-        CREATED, CANCELED, SUCCESS
-    }
-    LocalDateTime CreateDate;
-    LocalDateTime CloseDate;
+    Long id;
+
+    @Enumerated(EnumType.ORDINAL)
+    StatusEnum statusEnum;
+
+    LocalDateTime createDate;
+
+    LocalDateTime closeDate;
+
     @ManyToOne
     StoreUser username;
-    @ManyToOne
-    CartItem CartItem;
 
+    public ShoppingCart(LocalDateTime createDate, StatusEnum statusEnum) {
+        createDate = createDate;
+        statusEnum = statusEnum;
+    }
 }
