@@ -42,8 +42,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public ShoppingCart saveShoppingCart(List<CartItem> cartItems) {
-       ShoppingCart newShoppingCart = shoppingCartRepository.save(new ShoppingCart(LocalDateTime.now(), StatusEnum.CREATED, userService.getAuthUser()));
 
+        StoreUser user = userService.getAuthUser();
+
+       ShoppingCart newShoppingCart = shoppingCartRepository.save(new ShoppingCart(LocalDateTime.now(), StatusEnum.CREATED, user));
 
         for (CartItem cartItem : cartItems) {
             cartItemService.saveCartItem(cartItem, newShoppingCart);

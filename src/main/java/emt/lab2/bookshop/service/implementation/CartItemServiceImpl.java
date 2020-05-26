@@ -21,7 +21,6 @@ public class CartItemServiceImpl implements CartItemService {
         this.bookService = bookService;
     }
 
-
     @Override
     public List<CartItem> getAllCartItems() {
         return cartItemRepository.findAll();

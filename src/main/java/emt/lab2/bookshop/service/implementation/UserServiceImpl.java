@@ -4,8 +4,6 @@ import emt.lab2.bookshop.model.StoreUser;
 import emt.lab2.bookshop.repository.UserRepository;
 import emt.lab2.bookshop.service.UserService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -54,9 +52,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public StoreUser getAuthUser() {
-        StoreUser storeUser = new StoreUser();
-        storeUser.setUsername("AnaMarija");
-        storeUser.setPassword("Anchy");
-        return storeUser;
+        if (getOneUser("test-user").isPresent()) {
+            return getOneUser("test-user").get();
+        }
+
+        return null;
     }
 }

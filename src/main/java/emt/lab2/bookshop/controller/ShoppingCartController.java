@@ -7,7 +7,6 @@ import emt.lab2.bookshop.service.implementation.ShoppingCartServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/shopping-carts")
@@ -40,13 +39,15 @@ public class ShoppingCartController {
         shoppingCartService.delete(id);
     }
 
+    @PostMapping("/{id}/close")
+    public ShoppingCart closeCart(@PathVariable Long id) {
+        return shoppingCartService.closeShoppingCart(id);
+    }
+
+
 //    @PutMapping("/{id}")
 //    public ShoppingCart editedCart(@RequestBody ShoppingCart shoppingCart, @PathVariable Long id){
 //        return shoppingCartService.editedShoppingCart(shoppingCart, id);
 //    }
-    @PostMapping("/{id}/close")
-    public ShoppingCart closeCart(@PathVariable Long id){
-        return shoppingCartService.closeShoppingCart(id);
-    }
 }
 

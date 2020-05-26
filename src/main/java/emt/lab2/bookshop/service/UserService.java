@@ -12,6 +12,4 @@ public interface UserService {
      StoreUser editedUser(StoreUser storeUser, String username);
      void deleted(StoreUser storeUser);
      StoreUser getAuthUser();
-
-
 }

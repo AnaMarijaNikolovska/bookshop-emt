@@ -21,7 +21,7 @@ public class ShoppingCart {
 
     LocalDateTime closeDate;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     StoreUser username;
 
     public ShoppingCart(LocalDateTime createDate, StatusEnum statusEnum, StoreUser storeUser) {
