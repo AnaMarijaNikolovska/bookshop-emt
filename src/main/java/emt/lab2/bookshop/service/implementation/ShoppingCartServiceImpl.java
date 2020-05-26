@@ -1,15 +1,11 @@
 package emt.lab2.bookshop.service.implementation;
 
-import emt.lab2.bookshop.model.CartItem;
-import emt.lab2.bookshop.model.ShoppingCart;
-import emt.lab2.bookshop.model.StatusEnum;
-import emt.lab2.bookshop.model.StoreUser;
+import emt.lab2.bookshop.model.*;
 import emt.lab2.bookshop.repository.ShoppingCartRepository;
 import emt.lab2.bookshop.service.CartItemService;
 import emt.lab2.bookshop.service.ShoppingCartService;
 import emt.lab2.bookshop.service.UserService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -45,7 +41,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         StoreUser user = userService.getAuthUser();
 
-       ShoppingCart newShoppingCart = shoppingCartRepository.save(new ShoppingCart(LocalDateTime.now(), StatusEnum.CREATED, user));
+        ShoppingCart newShoppingCart = shoppingCartRepository.save(new ShoppingCart(LocalDateTime.now(), StatusEnum.CREATED, user));
 
         for (CartItem cartItem : cartItems) {
             cartItemService.saveCartItem(cartItem, newShoppingCart);
@@ -55,20 +51,23 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCart editedShoppingCart(ShoppingCart shoppingCart, Long id) {
-        Optional<ShoppingCart> optionalShoppingCart = getOneShoppingCart(id);
-//        if (optionalShoppingCart.isPresent()) {
-//            ShoppingCart cart = optionalShoppingCart.get();
-//
-//            cart.setId(shoppingCart.getId());
-//            cart.setCloseDate(shoppingCart.getCloseDate());
-//            cart.setCreateDate(shoppingCart.getCreateDate());
-//            cart.setUsername(shoppingCart.getUsername());
-//            return saveShoppingCart(cart);
-//        }
+    public ShoppingCart editedShoppingCart(Long id, Book book, Boolean isAdd) {
+        Optional<ShoppingCart> nullableCart = getOneShoppingCart(id);
+
+        if (nullableCart.isPresent()) {
+            List<CartItem> cartItems = cartItemService.getAllCartItemsFromCart(id);
+
+            for (CartItem cartItem: cartItems) {
+                if (cartItem.getBook().getId().equals(book.getId())) {
+                    cartItemService.editCartItem(cartItem, book, isAdd);
+
+                }
+            }
+
+            return saveShoppingCart(cartItems);
+        }
+
         return null;
-
-
     }
 
     @Override
@@ -79,7 +78,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public ShoppingCart closeShoppingCart(Long id) {
         Optional<ShoppingCart> optionalShoppingCart = getOneShoppingCart(id);
-        if (optionalShoppingCart.isPresent()){
+        if (optionalShoppingCart.isPresent()) {
             ShoppingCart cart = optionalShoppingCart.get();
             cart.setStatusEnum(StatusEnum.CANCELED);
             cart.setCloseDate(LocalDateTime.now());

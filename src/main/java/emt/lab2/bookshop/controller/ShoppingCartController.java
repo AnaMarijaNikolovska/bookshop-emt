@@ -1,5 +1,7 @@
 package emt.lab2.bookshop.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import emt.lab2.bookshop.model.Book;
 import emt.lab2.bookshop.model.CartItem;
 import emt.lab2.bookshop.model.ShoppingCart;
 import emt.lab2.bookshop.service.CartItemService;
@@ -45,9 +47,9 @@ public class ShoppingCartController {
     }
 
 
-//    @PutMapping("/{id}")
-//    public ShoppingCart editedCart(@RequestBody ShoppingCart shoppingCart, @PathVariable Long id){
-//        return shoppingCartService.editedShoppingCart(shoppingCart, id);
-//    }
+    @PutMapping("/{id}")
+    public ShoppingCart editedCart(@RequestBody Book book, @PathVariable Long id, @RequestParam Boolean isAdd){
+        return shoppingCartService.editedShoppingCart(id, book, isAdd);
+    }
 }
 

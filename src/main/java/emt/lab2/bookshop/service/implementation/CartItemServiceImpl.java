@@ -38,18 +38,44 @@ public class CartItemServiceImpl implements CartItemService {
         Optional<Book> nullableBook = bookService.getOneBook(cartItem.getBook().getId());
         if (nullableBook.isPresent()) {
             Book book = nullableBook.get();
-            newCartItem.setId(cartItem.getId());
-            newCartItem.setBook(book);
-            newCartItem.setShoppingCart(shoppingCart);
-            return cartItemRepository.save(newCartItem);
+
+            if (book.getNumberOfBooks() > 0) {
+                Book bookToBeAdded = new Book(book.getId(), book.getName(), book.getNumberOfBooks(), book.getCategory(), book.getPicture()); // kopija od objektot shto sakame da go stavime
+                bookToBeAdded.setNumberOfBooks(1L);
+
+                newCartItem.setId(cartItem.getId());
+                newCartItem.setBook(bookToBeAdded); // 1 kniga
+                newCartItem.setShoppingCart(shoppingCart);
+
+                book.setNumberOfBooks(book.getNumberOfBooks() - bookToBeAdded.getNumberOfBooks()); // Odzemi od vkupniot broj - 1 (dodadenata kniga)
+                bookService.editBook(book, book.getId());
+
+                return cartItemRepository.save(newCartItem);
+            }
         }
 
         return null;
     }
 
     @Override
-    public CartItem editCartItem(CartItem cartItem) {
-        return null;
+    public CartItem editCartItem(CartItem cartItem, Book book, Boolean isAdd) {
+        Book editedBook = bookService.getOneBook(book.getId()).get();
+
+        if (isAdd) { // +
+            if (editedBook.getNumberOfBooks() > 0) {
+                cartItem.getBook().setNumberOfBooks(cartItem.getBook().getNumberOfBooks() + 1);
+                editedBook.setNumberOfBooks(editedBook.getNumberOfBooks() - 1);
+                bookService.editBook(editedBook, book.getId());
+            }
+        } else { // -
+            if (cartItem.getBook().getNumberOfBooks() > 0 ){
+                cartItem.getBook().setNumberOfBooks(cartItem.getBook().getNumberOfBooks() - 1);
+                editedBook.setNumberOfBooks(editedBook.getNumberOfBooks() + 1);
+                bookService.editBook(editedBook, book.getId());
+            }
+        }
+
+        return cartItem;
     }
 
     @Override
